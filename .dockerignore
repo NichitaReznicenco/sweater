@@ -1,0 +1,16 @@
+.git
+.github
+.remember
+tests
+k8s
+*.md
+*.docx
+_report_dump.txt
+__pycache__
+**/__pycache__
+*.pyc
+.pytest_cache
+*.db
+docker-compose*.yml
+requirements-dev.txt
+.venv

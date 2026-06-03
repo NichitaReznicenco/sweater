@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 360px;
+            text-align: center;
+        }
+        .success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        h2 { margin-bottom: 20px; color: #333; }
+        .user { font-size: 24px; margin-bottom: 24px; color: #667eea; font-weight: bold; }
+        a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: transform 0.2s;
+        }
+        a:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success">Вы успешно вошли!</div>
+        <h2>Добро пожаловать!</h2>
+        <div class="user" id="userName">Загрузка...</div>
+        <a href="#" onclick="logout()">Выйти</a>
+    </div>
+    <script>
+        fetch('/api/profile', { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.name) {
+                    document.getElementById('userName').textContent = data.name;
+                } else {
+                    window.location.href = '/login.html';
+                }
+            })
+            .catch(() => window.location.href = '/login.html');
+
+        function logout() {
+            fetch('/api/logout', { method: 'POST', credentials: 'include' })
+                .then(() => window.location.href = '/login.html');
+        }
+    </script>
+</body>
+</html>
